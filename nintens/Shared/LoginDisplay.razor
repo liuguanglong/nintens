@@ -1,0 +1,38 @@
+﻿@using MudBlazor
+@using  System.Globalization
+
+@inject NavigationManager Nav
+
+        <MudText Align="Align.Right" Style="@($"color:{Colors.Yellow.Accent2};")">Hello, user@ninetens.com!</MudText>
+        <MudMenu Icon="@Icons.Material.Filled.Language" IconColor="@Color.Warning">
+            @foreach (var culture in supportedCultures)
+            {
+                <MudMenuItem  Style="height:25px;width:140px;"><MudLink>@culture.DisplayName</MudLink></MudMenuItem>
+            }
+        </MudMenu>
+
+        <MudMenu Style="width:120px;" Icon="@Icons.Material.Filled.Settings" IconColor="@Color.Warning" PositionAtCursor="true">
+            <MudMenuItem Style="height:25px;width:100px;"><MudLink>Profile</MudLink></MudMenuItem>
+            <MudMenuItem Style="height:25px;width:100px;"><MudLink>Logout</MudLink></MudMenuItem>
+        </MudMenu>
+@code
+{
+    protected override void OnInitialized()
+    {
+        Culture = CultureInfo.CurrentCulture;
+    }
+
+    private CultureInfo Culture
+    {
+        get => CultureInfo.CurrentCulture;
+        set
+        {
+        }
+    }
+    private CultureInfo[] supportedCultures = new[]
+{
+        new CultureInfo("en-US"),
+        new CultureInfo("zh-CN"),
+    };
+
+}

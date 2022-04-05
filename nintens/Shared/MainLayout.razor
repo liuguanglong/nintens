@@ -1,0 +1,57 @@
+﻿@inherits LayoutComponentBase
+
+<MudThemeProvider/>
+<MudDialogProvider 
+    FullWidth="true"  
+    MaxWidth="MaxWidth.Medium"    
+    CloseButton="true"    
+    DisableBackdropClick="true"   
+    NoHeader="false"   
+    Position="DialogPosition.TopCenter"/>
+<MudSnackbarProvider />
+<MudLayout>
+    <MudAppBar Color="Color.Primary" Fixed="false" Dense="true" DisableGutters="true" Elevation="0">
+        @if (_drawerOpen == true)
+        {
+            <MudElement Class="d-flex justify-center" Style="width:260px;"><img height="20" src="../logo_expand.png"></MudElement>
+        }
+        else
+        {
+            <MudElement Class="d-flex justify-center" Style="width:60px;"><img height="20" src="../logo_close.png"></MudElement>
+        }
+
+        <MudIconButton Icon="@Icons.Material.Filled.Menu" Color="Color.Inherit" Edge="Edge.Start" OnClick="@((e) => DrawerToggle())" />
+        <MudText Align="Align.Left"><i>NinTens</i></MudText>
+        <MudSpacer />
+        <LoginDisplay />
+    </MudAppBar>
+    <MudDrawerContainer Height="768px">
+        <MudDrawer  Height="768px" Width="260px" @bind-Open="@_drawerOpen" Fixed="false" Variant="@DrawerVariant.Mini" OpenMiniOnHover="false" Elevation="0">
+            <NavMenu />
+        </MudDrawer>
+        <MudMainContent Class="pt-16 px-16">
+            <MudContainer MaxWidth="MaxWidth.ExtraLarge">
+                @Body
+            </MudContainer>
+        </MudMainContent>
+    </MudDrawerContainer>
+</MudLayout>
+
+@code {
+    bool _drawerOpen = true;
+
+    void DrawerToggle()
+    {
+        _drawerOpen = !_drawerOpen;
+    }
+
+    MudTheme MyCustomTheme = new MudTheme()
+    {
+        Palette = new Palette()
+        {
+            Primary = Colors.Blue.Darken2,
+            Secondary = Colors.Red.Darken2,
+            Tertiary = Colors.Green.Darken2
+        }
+    };
+}
