@@ -49,11 +49,13 @@ namespace scriptengine.test
                                 using System.Threading.Tasks;
 
                                 public partial class TestHanlder {
+
                                     [EventAttribute(""button2"",""click"")]
                                     public async Task button1_click(EventArgs args)
                                     {
                                          System.Console.WriteLine(""Event Called"");
                                     }
+
                                 }
                            }
                     ";

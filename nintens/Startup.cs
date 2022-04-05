@@ -5,6 +5,10 @@ using service;
 
 using MudBlazor;
 using MudBlazor.Services;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Components.Authorization;
+using PGoPlusTaskCenter.Areas.Identity;
+using Microsoft.AspNetCore.Identity.UI.Services;
 
 namespace nintens
 {
@@ -30,6 +34,30 @@ namespace nintens
             services.AddDbContextFactory<nintensdbcontext>(options => options.UseMySql(
                  connString,
                 ServerVersion.AutoDetect(connString)));
+
+
+            services.AddTransient<IEmailSender, EmailSender>(i =>
+                new EmailSender(
+                    Configuration["EmailSender:Host"],
+                    Configuration.GetValue<int>("EmailSender:Port"),
+                    Configuration.GetValue<bool>("EmailSender:EnableSSL"),
+                    Configuration["EmailSender:UserName"],
+                    Configuration["EmailSender:Password"]
+                )
+            );
+
+            //Add Identity Service Begin
+            services.AddDbContextPool<ApplicationDbContext>(
+                options => options.UseMySql(
+                    connString,
+                ServerVersion.AutoDetect(connString)));
+
+            services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedEmail = true)
+                .AddRoles<IdentityRole>()
+                .AddEntityFrameworkStores<ApplicationDbContext>().AddDefaultTokenProviders();
+            services.AddScoped<AuthenticationStateProvider, RevalidatingIdentityAuthenticationStateProvider<IdentityUser>>();
+            services.AddAuthentication("Identity.Application").AddCookie();
+            //Add Identity Service End
 
             services.AddTransient<WeatherForecastService>();
 

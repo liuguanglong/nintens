@@ -17,9 +17,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "service.test", "service.tes
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "eventlib", "eventlib\eventlib.csproj", "{8980053E-9308-468F-97D3-830DE0289E4B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "uiscriptengine", "uiscriptengine\uiscriptengine.csproj", "{E6637AC8-EDA0-417E-9B59-30CB2B3ECA7B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "uiscriptengine", "uiscriptengine\uiscriptengine.csproj", "{E6637AC8-EDA0-417E-9B59-30CB2B3ECA7B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "scriptengine.test", "scriptengine.test\scriptengine.test.csproj", "{A1DB95CB-5115-4761-A1EE-6B6F93E51DD2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "scriptengine.test", "scriptengine.test\scriptengine.test.csproj", "{A1DB95CB-5115-4761-A1EE-6B6F93E51DD2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

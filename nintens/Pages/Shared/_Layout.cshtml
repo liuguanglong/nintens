@@ -1,0 +1,62 @@
+﻿@using Microsoft.AspNetCore.Hosting
+@using Microsoft.AspNetCore.Mvc.ViewEngines
+@inject IWebHostEnvironment Environment
+@inject ICompositeViewEngine Engine
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>PGoPlusTaskCenter</title>
+    <link rel="stylesheet" href="~/Identity/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/Identity/css/site.css" />
+    <link href="pgoplustaskcenter.styles.css" rel="stylesheet" />
+    <style>
+        body {
+            min-width: 80vw;
+            min-height: 80vh;
+            margin: 0 auto;
+        }
+        .logincontainer {
+            display: flex;
+            background-image: url('../../image/icon.png'),linear-gradient(to right, #b8cbb8 0%, #b8cbb8 0%, #b465da 0%, #cf6cc9 33%, #ee609c 66%, #ee609c 100%);
+            background-size: 300px 40px, 100vw 100vh;
+            background-repeat: no-repeat, no-repeat;
+            background-position: left 50px top 50px, left top;
+        }
+        .logincontainer1 {
+            background-image: url('../../image/backimage2.svg'),url('../../image/backimage1.svg');
+            background-size: 300px 200px,980px 700px;
+            background-repeat: no-repeat,no-repeat;
+            background-position: left 550px top 350px, left 200px top 100px;
+            width: 1200px;
+            height: 800px;
+        }
+        .left {
+            min-width: 20vw;
+            min-height: 100vh;
+        }
+        .loginform {
+            margin-left: 230px;
+            margin-top: 230px;
+            width: 250px;
+            height: 380px;
+            background-color: #FFFFFF;
+        }
+    </style>
+
+</head>
+<body>
+    <div class="logincontainer">
+        <div class="left">
+        </div>
+        @RenderBody()
+    </div>
+    <script src="~/Identity/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/Identity/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/Identity/js/site.js" asp-append-version="true"></script>
+    @RenderSection("Scripts", required: false)
+</body>
+</html>
+
+

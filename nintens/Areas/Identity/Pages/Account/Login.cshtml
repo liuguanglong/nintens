@@ -1,0 +1,45 @@
+﻿@page
+@using MudBlazor
+
+
+@model LoginModel
+
+<div class="logincontainer1">
+    <div class="loginform">
+        <div class="text-center">
+            <h4 class="mt-1 mb-1 pt-3">SIGN IN</h4>
+            <a style="color:silver;font-size:16px;">ProcessGo Plus User Portal</a>
+        </div>
+        <form id="account" method="post">
+            <div class="form-outline mb-1 pt-3 ml-2 mr-2">
+                <input type="email" asp-for="Input.Email" class="form-control" placeholder="Email address" />
+            </div>
+            <div class="form-outline mb-1 ml-2 mr-2">
+                <input type="password" asp-for="Input.Password" class="form-control" placeholder="Password" />
+            </div>
+            <div class="text-center pt-1 ml-2 mr-2">
+                <div class="checkbox">
+                    <label style="color:silver;font-size:16px;" asp-for="Input.RememberMe">
+                        <input asp-for="Input.RememberMe" />
+                        @Html.DisplayNameFor(m => m.Input.RememberMe)
+                    </label>
+                </div>
+            </div>
+            <div class="text-center mr-2 ml-2">
+                <button class="btn btn-primary btn-block fa-lg gradient-custom-2 mb-2" type="submit">Log in</button>
+            </div>
+            <div asp-validation-summary="All" style="font-size:12px;" class="text-danger"></div>
+            <div class="text-center mb-1 pb-1">
+                <a asp-page="./Register" class="text-left mr-3" asp-route-returnUrl="@Model.ReturnUrl">Sign Up</a>
+                <a id="forgot-password" class="text-right ml-2" asp-page="./ForgotPassword">Forgot password?</a>
+            </div>
+            <div class="text-center m4-3 pb-1">
+                <a style="color:silver;font-size:14px;">Created by Inossem CA@2022</a>
+            </div>
+        </form>
+    </div>
+
+    </div>
+    @section Scripts {
+        <partial name="_ValidationScriptsPartial" />
+    }

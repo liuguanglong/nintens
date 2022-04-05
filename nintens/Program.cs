@@ -46,7 +46,14 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
-app.MapBlazorHub();
+//Add Authorization Begin
+//app.MapBlazorHub();
+app.UseAuthentication();
+app.UseAuthorization();
+app.MapRazorPages().RequireAuthorization();
+app.MapBlazorHub().RequireAuthorization();
+//Add Authorization End
+
 app.MapFallbackToPage("/_Host");
 
 //Config logContext Begin

@@ -1,0 +1,33 @@
+﻿@page
+@model RegisterModel
+@{
+    ViewData["Title"] = "Register";
+}
+
+<div class="logincontainer1">
+    <div class="loginform">
+        <div class="text-center">
+            <h4 class="mt-1 mb-1 pt-3">CREATE ACCOUNT</h4>
+            <a style="color:silver;font-size:16px;">ProcessGo Plus User Portal</a>
+        </div>
+        <form asp-route-returnUrl="@Model.ReturnUrl" method="post">
+            <div class="form-outline mb-1 pt-1 ml-2 mr-2">
+                <input type="email" asp-for="Input.Email" class="form-control" placeholder="Email address" />
+            </div>
+            <div class="form-outline mb-1 pt-1 ml-2 mr-2">
+                <input type="password" asp-for="Input.Password" class="form-control" placeholder="Password" />
+            </div>
+            <div class="form-outline mb-1 ml-2 pt-1 pb-1 mr-2">
+                <input type="password" asp-for="Input.ConfirmPassword" class="form-control" placeholder="ConfirmPassword" />
+            </div>
+            <div class="text-center mr-2 ml-2">
+                <button type="submit" class="btn btn-primary btn-block fa-lg gradient-custom-2 mb-3">Register</button>
+            </div>
+            <div asp-validation-summary="All" style="font-size:12px;" class="text-danger"></div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
