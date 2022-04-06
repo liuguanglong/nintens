@@ -9,6 +9,14 @@ using System.Threading.Tasks;
 
 namespace uiscriptengine
 {
+    public class EventHandlerInfo
+    {
+        public String ControlName;
+        public String EventName;
+        public String EventArgsType;
+        public String MethodName;
+    }
+
     public class EventHanlderGenerator
     {
         SyntaxNode root;
@@ -93,6 +101,34 @@ namespace uiscriptengine
             }
         }
 
+        public List<EventHandlerInfo> getEventHandlerInfo()
+        {
+            List<EventHandlerInfo> list = new List<EventHandlerInfo>();
+
+            IEnumerable<MethodDeclarationSyntax> methods = root.DescendantNodes().OfType<MethodDeclarationSyntax>();
+            foreach (var method in methods)
+            {
+                if (method.AttributeLists.Count == 1)
+                {
+                    var node = method.AttributeLists.First().Attributes.First();
+                    var identity = node.Name.ToString();
+                    if (identity == "EventAttribute")
+                    {
+                        var args = node.ArgumentList.Arguments.ToArray();
+                        ;
+                        EventHandlerInfo info = new EventHandlerInfo();
+                        info.ControlName = args[0].ToString();
+                        info.EventName = args[1].ToString();
+                        info.EventArgsType = method.ParameterList.Parameters.First().Type.ToString();
+                        info.MethodName = method.Identifier.ValueText;
+
+                        list.Add(info);
+                    }
+                }
+            }
+
+            return list;
+        }
 
         public String GetSource()
         {

@@ -59,5 +59,20 @@ namespace scriptengine.test
             }
         }
 
+
+        [Test]
+        public void TestGetMethodInfo()
+        {
+            var generator = new EventHanlderGenerator(formname, id);
+            generator.addEventHandler("button1", "Click", typeof(EventArgs));
+            generator.addEventHandler("button2", "Click", typeof(EventArgs));
+            Console.WriteLine(generator.GetSource());
+
+            var list = generator.getEventHandlerInfo();
+            foreach(var m in list)
+            {
+                System.Console.WriteLine($"{m.ControlName}  {m.EventName}  {m.MethodName}  {m.EventArgsType}");
+            }
+        }
     }
 }
