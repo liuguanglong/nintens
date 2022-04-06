@@ -57,5 +57,30 @@ namespace uiscriptengine
                 return result;
             }
         }
+
+        public EmitResult BuildScriptAssembly(String source, String assemblyName)
+        {
+            var syntaxTree = CSharpSyntaxTree.ParseText(source);
+            CSharpCompilation compilation = CSharpCompilation.Create(
+                assemblyName,
+                syntaxTrees: new[] { syntaxTree },
+                references: references,
+                options: new CSharpCompilationOptions(
+                    OutputKind.DynamicallyLinkedLibrary,
+                    optimizationLevel: OptimizationLevel.Release,
+                    concurrentBuild: false,
+                    //// Warnings CS1701 and CS1702 are disabled when compiling in VS too
+                    specificDiagnosticOptions: new[]
+                    {
+                        new KeyValuePair<string, ReportDiagnostic>("CS1701", ReportDiagnostic.Suppress),
+                        new KeyValuePair<string, ReportDiagnostic>("CS1702", ReportDiagnostic.Suppress),
+                    }));
+
+            using (var file = new FileStream(assemblyName, FileMode.Create))
+            {
+                EmitResult result = compilation.Emit(file);
+                return result;
+            }
+        }
     }
 }
