@@ -9,11 +9,19 @@ using System.Threading.Tasks;
 
 namespace uiscriptengine
 {
+    public class EventHandlerInfo
+    {
+        public String ControlName;
+        public String EventName;
+        public String EventArgsType;
+        public String MethodName;
+    }
+
     public class EventHanlderGenerator
     {
         SyntaxNode root;
 
-        public EventHanlderGenerator(string className)
+        public EventHanlderGenerator(string formname,string id)
         {
             var code = @"
                            namespace uiscriptengine
@@ -33,13 +41,21 @@ namespace uiscriptengine
                                 }
                            }
  ";
-            var syntaxTree = CSharpSyntaxTree.ParseText(code);
+            var syntaxTree = CSharpSyntaxTree.ParseText(code.Replace("TestHanlder", $"{formname}_{id}"));
+            root = syntaxTree.GetRoot();
+        }
+
+        public EventHanlderGenerator(string formname, string id,string source)
+        {
+            var syntaxTree = CSharpSyntaxTree.ParseText(source);
             var identifierToken = syntaxTree.GetRoot().DescendantTokens()
                 .First(t => t.IsKind(SyntaxKind.IdentifierToken)
                 && t.Parent.Kind() == SyntaxKind.ClassDeclaration);
-            var newIdentifier = SyntaxFactory.Identifier(className);
-
-            root = syntaxTree.GetRoot().ReplaceToken(identifierToken, newIdentifier);           
+            if(identifierToken.ToString() != $"{formname}_{id}")
+            {
+                var newIdentifier = SyntaxFactory.Identifier($"{formname}_{id}");
+                root = syntaxTree.GetRoot().ReplaceToken(identifierToken, newIdentifier);
+            }
         }
 
         public void addEventHandler(String controlName, String eventName, Type eventType)
@@ -65,21 +81,58 @@ namespace uiscriptengine
             if (emptyClass == null)
                 return;
 
-            var method =
-                 root.DescendantNodes().
-                 OfType<MethodDeclarationSyntax>().Where(x => x.Identifier.ValueText == $"{controlName}_{eventName}").FirstOrDefault();
-
-            if(method != null)
+            IEnumerable<MethodDeclarationSyntax> methods = root.DescendantNodes().OfType<MethodDeclarationSyntax>();
+            foreach(var method in methods)
             {
-                var newClass = emptyClass.RemoveNode(method, SyntaxRemoveOptions.AddElasticMarker);
-                root = root.ReplaceNode(emptyClass, newClass);
+                if(method.AttributeLists.Count == 1)
+                {
+                    var node = method.AttributeLists.First().Attributes.First();
+                    var identity = node.Name.ToString();
+                    if(identity == "EventAttribute")
+                    {
+                        if(node.ArgumentList.Arguments.ToString() == $"\"{controlName}\",\"{eventName}\""
+                            )
+                        {
+                                var newClass = emptyClass.RemoveNode(method, SyntaxRemoveOptions.AddElasticMarker);
+                                root = root.ReplaceNode(emptyClass, newClass);
+                        }
+                    }
+                }
             }
         }
 
-
-        public SyntaxTree GetSyntaxTree()
+        public List<EventHandlerInfo> getEventHandlerInfo()
         {
-            return SyntaxFactory.SyntaxTree(root);
+            List<EventHandlerInfo> list = new List<EventHandlerInfo>();
+
+            IEnumerable<MethodDeclarationSyntax> methods = root.DescendantNodes().OfType<MethodDeclarationSyntax>();
+            foreach (var method in methods)
+            {
+                if (method.AttributeLists.Count == 1)
+                {
+                    var node = method.AttributeLists.First().Attributes.First();
+                    var identity = node.Name.ToString();
+                    if (identity == "EventAttribute")
+                    {
+                        var args = node.ArgumentList.Arguments.ToArray();
+                        ;
+                        EventHandlerInfo info = new EventHandlerInfo();
+                        info.ControlName = args[0].ToString();
+                        info.EventName = args[1].ToString();
+                        info.EventArgsType = method.ParameterList.Parameters.First().Type.ToString();
+                        info.MethodName = method.Identifier.ValueText;
+
+                        list.Add(info);
+                    }
+                }
+            }
+
+            return list;
+        }
+
+        public String GetSource()
+        {
+            return SyntaxFactory.SyntaxTree(root).GetRoot().NormalizeWhitespace().ToFullString();
         }
 
         private MethodDeclarationSyntax CrateEventHanlder(String controlName,String eventName,Type eventType)
@@ -89,8 +142,14 @@ namespace uiscriptengine
             var eventHanlder = SyntaxFactory.MethodDeclaration(SyntaxFactory.ParseTypeName("Task"), $"{controlName}_{eventName}")
                                         .AddModifiers(SyntaxFactory.Token(SyntaxKind.PublicKeyword))
                                         .AddModifiers(SyntaxFactory.Token(SyntaxKind.AsyncKeyword))
-                                        .AddParameterListParameters(SyntaxFactory.Parameter(SyntaxFactory.Identifier("args")).WithType(SyntaxFactory.ParseTypeName(eventType.FullName)))
-                                        .AddAttributeLists(SyntaxFactory.AttributeList().AddAttributes(SyntaxFactory.Attribute(SyntaxFactory.IdentifierName("EventAttribute"), arguments)))
+                                        .AddParameterListParameters(
+                                                SyntaxFactory.Parameter(
+                                                       SyntaxFactory.Identifier("args")).WithType(
+                                                            SyntaxFactory.ParseTypeName(eventType.FullName)))
+                                        .AddAttributeLists(
+                                                SyntaxFactory.AttributeList().AddAttributes(
+                                                    SyntaxFactory.Attribute(
+                                                        SyntaxFactory.IdentifierName("EventAttribute"), arguments)))
                                         .WithBody(SyntaxFactory.Block());
 
             return eventHanlder;
