@@ -1,8 +1,9 @@
 ﻿@using MudBlazor
 @using  System.Globalization
+@using Microsoft.AspNetCore.Identity
 
 @inject NavigationManager Nav
-
+@inject SignInManager<IdentityUser> SignInManager
         <MudText Align="Align.Right" Style="@($"color:{Colors.Yellow.Accent2};")">Hello, user@ninetens.com!</MudText>
         <MudMenu Icon="@Icons.Material.Filled.Language" IconColor="@Color.Warning">
             @foreach (var culture in supportedCultures)
@@ -13,7 +14,7 @@
 
         <MudMenu Style="width:120px;" Icon="@Icons.Material.Filled.Settings" IconColor="@Color.Warning" PositionAtCursor="true">
             <MudMenuItem Style="height:25px;width:100px;"><MudLink>Profile</MudLink></MudMenuItem>
-            <MudMenuItem Style="height:25px;width:100px;"><MudLink>Logout</MudLink></MudMenuItem>
+            <MudMenuItem Style="height:25px;width:100px;"><MudLink Href="Identity/Account/LogOut">Logout</MudLink></MudMenuItem>
         </MudMenu>
 @code
 {
@@ -35,4 +36,9 @@
         new CultureInfo("zh-CN"),
     };
 
+    public async Task OnPost()
+    {
+        await SignInManager.SignOutAsync();
+        NavigationManager.ToBaseRelativePath("Identity/Account/Login/");
+    }
 }

@@ -13,14 +13,14 @@
 
         @{ if (User.Identity.IsAuthenticated)
             {
-                <form class="form-inline" asp-area="Identity" asp-page="/Account/Login" asp-route-returnUrl="@Url.Page("/", new { area = "" })" method="post">
+                <form class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Page("/", new { area = "" })" method="post">
                     <button class="btn btn-primary btn-block fa-lg gradient-custom-2 pt-2 ml-3 mr-3 mt-4 mb-3" type="submit">Click here to Logout</button>
                 </form>
             }
             else
             {
-        <p>You have successfully logged out of the application.</p>
-                }
+                <p>You have successfully logged out of the application.</p>
+             }
             }
     </div>
  </div>

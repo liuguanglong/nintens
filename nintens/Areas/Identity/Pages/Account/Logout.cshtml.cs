@@ -36,7 +36,7 @@ namespace IdentityDemoWithSqlServr.Areas.Identity.Pages.Account
             }
             else
             {
-                return RedirectToPage();
+                return RedirectToPage("./Login");
             }
         }
     }

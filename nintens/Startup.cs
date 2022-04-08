@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Components.Authorization;
 using PGoPlusTaskCenter.Areas.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
+using IdentityDemoWithSqlServr.Areas.Identity;
 
 namespace nintens
 {

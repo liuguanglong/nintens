@@ -71,4 +71,18 @@ app.Use(async (httpContext, next) =>
 });
 //Config logContext End
 
+app.UseEndpoints(endpoints =>
+{
+    endpoints.MapGet("/Identity/Account/Manage/", context => Task.Factory.StartNew(() => context.Response.Redirect("/Identity/Account/Login", true, true)));
+    endpoints.MapGet("/Identity/Account/Manage/email", context => Task.Factory.StartNew(() => context.Response.Redirect("/Identity/Account/Login", true, true)));
+    endpoints.MapGet("/Identity/Account/Manage/changepassword", context => Task.Factory.StartNew(() => context.Response.Redirect("/Identity/Account/Login", true, true)));
+    endpoints.MapGet("/Identity/Account/Manage/personaldata", context => Task.Factory.StartNew(() => context.Response.Redirect("/Identity/Account/Login", true, true)));
+    endpoints.MapGet("/Identity/Account/Manage/twofactorauthentication", context => Task.Factory.StartNew(() => context.Response.Redirect("/Identity/Account/Login", true, true)));
+    endpoints.MapPost("/Identity/Account/Manage/", context => Task.Factory.StartNew(() => context.Response.Redirect("/Identity/Account/Login", true, true)));
+    endpoints.MapPost("/Identity/Account/Manage/email", context => Task.Factory.StartNew(() => context.Response.Redirect("/Identity/Account/Login", true, true)));
+    endpoints.MapPost("/Identity/Account/Manage/changepassword", context => Task.Factory.StartNew(() => context.Response.Redirect("/Identity/Account/Login", true, true)));
+    endpoints.MapPost("/Identity/Account/Manage/personaldata", context => Task.Factory.StartNew(() => context.Response.Redirect("/Identity/Account/Login", true, true)));
+    endpoints.MapPost("/Identity/Account/Manage/twofactorauthentication", context => Task.Factory.StartNew(() => context.Response.Redirect("/Identity/Account/Login", true, true)));
+});
+
 app.Run();
