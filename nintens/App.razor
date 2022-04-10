@@ -3,7 +3,7 @@
         <Found Context="routeData">
             <AuthorizeRouteView RouteData="@routeData" DefaultLayout="@typeof(MainLayout)">
                 <NotAuthorized>
-                    @{ NavigationManager.NavigateTo("/login"); }
+                <p role="alert">Sorry,you are not allowed to access this resource.</p>
                 </NotAuthorized>
              </AuthorizeRouteView>
         </Found>

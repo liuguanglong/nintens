@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using Moq;
 using NUnit.Framework;
 using System;
@@ -34,6 +35,28 @@ namespace repository.test
             user.CustomTag = "Administartor";
             dbcontext.SaveChanges();    
 
+        }
+
+        [Test]
+        public void InsertRole()
+        {
+            var dbcontext = factory.Object.CreateDbContext();
+            var role = new IdentityRole("Manager");
+            role.NormalizedName = "MANAGER";
+
+            var roleManager = dbcontext.Roles.Add(role);
+            var user = dbcontext.Users.Where(u => u.UserName == "liuguanglong@yahoo.com").FirstOrDefault();
+            if(user != null)
+            {
+                var userRole = new IdentityUserRole<String>
+                {
+                    RoleId = role.Id,
+                    UserId = user.Id
+                };
+
+                dbcontext.UserRoles.Add(userRole);
+                dbcontext.SaveChanges();
+            }
         }
     }
 }
