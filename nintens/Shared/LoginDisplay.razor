@@ -1,10 +1,13 @@
 ﻿@using MudBlazor
 @using  System.Globalization
 @using Microsoft.AspNetCore.Identity
+@using repository
 
 @inject NavigationManager Nav
-@inject SignInManager<IdentityUser> SignInManager
-        <MudText Align="Align.Right" Style="@($"color:{Colors.Yellow.Accent2};")">Hello, user@ninetens.com!</MudText>
+@inject SignInManager<ApplicationUser> SignInManager
+<AuthorizeView>
+    <Authorized>
+        <MudText Align="Align.Right" Style="@($"color:{Colors.Yellow.Accent2};")">Hello,@context.User.Identity.Name!</MudText>
         <MudMenu Icon="@Icons.Material.Filled.Language" IconColor="@Color.Warning">
             @foreach (var culture in supportedCultures)
             {
@@ -16,6 +19,13 @@
             <MudMenuItem Style="height:25px;width:100px;"><MudLink>Profile</MudLink></MudMenuItem>
             <MudMenuItem Style="height:25px;width:100px;"><MudLink Href="Identity/Account/LogOut">Logout</MudLink></MudMenuItem>
         </MudMenu>
+         </Authorized>
+    <NotAuthorized>
+        <MudLink Href="Identity/Account/Register" Typo="Typo.body2" Color="Color.Warning">Register</MudLink>
+        <MudLink Href="Identity/Account/Login" Typo="Typo.body2" Color="Color.Warning">Log in</MudLink>
+    </NotAuthorized>
+</AuthorizeView>
+
 @code
 {
     protected override void OnInitialized()
