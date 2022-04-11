@@ -58,7 +58,13 @@ namespace nintens
                 .AddRoles<IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>().AddDefaultTokenProviders();
             services.AddScoped<AuthenticationStateProvider, RevalidatingIdentityAuthenticationStateProvider<ApplicationUser>>();
-            services.AddAuthentication("Identity.Application").AddCookie();
+            services.AddAuthentication("Identity.Application")
+                .AddCookie()
+                .AddJwtBearerConfiguration(
+                Configuration["Jwt:ValidIssuer"],
+                Configuration["Jwt:ValidAudience"],
+                Configuration["JWT:Secret"]
+              );
             //Add Identity Service End
 
             services.AddTransient<WeatherForecastService>();
@@ -76,11 +82,33 @@ namespace nintens
                 config.SnackbarConfiguration.SnackbarVariant = Variant.Filled;
             });
 
-            services.AddSwaggerGen(c =>
+            services.AddSwaggerGen(opt =>
             {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "NintensRestfulApi", Version = "v1" });
-            });
-
+                opt.SwaggerDoc("v1", new OpenApiInfo { Title = "NintensRestfulApi", Version = "v1" });
+                opt.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+                {
+                    In = ParameterLocation.Header,
+                    Description = "Please enter token",
+                    Name = "Authorization",
+                    Type = SecuritySchemeType.Http,
+                    BearerFormat = "JWT",
+                    Scheme = "bearer"
+                });
+                opt.AddSecurityRequirement(new OpenApiSecurityRequirement
+                {
+                    {
+                        new OpenApiSecurityScheme
+                        {
+                            Reference = new OpenApiReference
+                            {
+                                Type=ReferenceType.SecurityScheme,
+                                Id="Bearer"
+                            }
+                        },
+                        new string[]{}
+                    }
+                });
+           });
         }
     }
 }

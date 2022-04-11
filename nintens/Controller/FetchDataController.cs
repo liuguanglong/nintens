@@ -2,8 +2,12 @@
 using Modal;
 using service;
 
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
+
 namespace nintens.Controller
 {
+    [Authorize(Roles = "ServiceUser", AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     [Route("api/[controller]")]
     [ApiController]
     public class FetchDataController : ControllerBase

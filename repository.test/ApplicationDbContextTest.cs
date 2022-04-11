@@ -18,7 +18,7 @@ namespace repository.test
         [SetUp]
         public void Setup()
         {
-            String connString = "server=localhost; userid=pgo;pwd=pgoplus;port=3306;database=nintens;Allow Zero Datetime=true;Convert Zero Datetime=True";
+            String connString = "server=localhost; userid=pgo;pwd=pgo+2021!;port=3306;database=nintens;Allow Zero Datetime=true;Convert Zero Datetime=True";
             var optionsBuilder = new DbContextOptionsBuilder<ApplicationDbContext>();
             optionsBuilder.UseMySql(connString, ServerVersion.AutoDetect(connString));
 
@@ -47,6 +47,28 @@ namespace repository.test
             var roleManager = dbcontext.Roles.Add(role);
             var user = dbcontext.Users.Where(u => u.UserName == "liuguanglong@yahoo.com").FirstOrDefault();
             if(user != null)
+            {
+                var userRole = new IdentityUserRole<String>
+                {
+                    RoleId = role.Id,
+                    UserId = user.Id
+                };
+
+                dbcontext.UserRoles.Add(userRole);
+                dbcontext.SaveChanges();
+            }
+        }
+
+        [Test]
+        public void AddServiceUser()
+        {
+            var dbcontext = factory.Object.CreateDbContext();
+            var role = new IdentityRole("ServiceUser");
+            role.NormalizedName = "SERVICEUSER";
+
+            var roleManager = dbcontext.Roles.Add(role);
+            var user = dbcontext.Users.Where(u => u.UserName == "liuguanglong@yahoo.com").FirstOrDefault();
+            if (user != null)
             {
                 var userRole = new IdentityUserRole<String>
                 {
