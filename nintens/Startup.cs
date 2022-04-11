@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Components.Authorization;
 using PGoPlusTaskCenter.Areas.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using IdentityDemoWithSqlServr.Areas.Identity;
+using Microsoft.OpenApi.Models;
 
 namespace nintens
 {
@@ -73,6 +74,11 @@ namespace nintens
                 config.SnackbarConfiguration.HideTransitionDuration = 500;
                 config.SnackbarConfiguration.ShowTransitionDuration = 500;
                 config.SnackbarConfiguration.SnackbarVariant = Variant.Filled;
+            });
+
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "NintensRestfulApi", Version = "v1" });
             });
 
         }

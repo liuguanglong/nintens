@@ -7,6 +7,9 @@ using Autofac.Extensions.DependencyInjection;
 using service;
 using Serilog;
 using Serilog.Context;
+using Microsoft.AspNetCore.Components.Authorization;
+using Microsoft.AspNetCore.Identity;
+using repository;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -20,6 +23,7 @@ builder.Host.UseServiceProviderFactory(new AutofacServiceProviderFactory());
 
 builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
+
 //builder.Services.AddSingleton<WeatherForecastService>();
 
 builder.Configuration.AddEnvironmentVariables().AddUserSecrets<Startup>(optional: true, reloadOnChange: true);
@@ -41,6 +45,8 @@ if (!app.Environment.IsDevelopment())
     app.UseExceptionHandler("/Error");
 }
 
+app.UseSwagger();
+app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "NintensRestfulApi v1"));
 
 app.UseStaticFiles();
 
@@ -53,6 +59,11 @@ app.UseAuthorization();
 app.MapRazorPages().RequireAuthorization();
 app.MapBlazorHub().RequireAuthorization();
 //Add Authorization End
+
+//Add WebAPI Contoller Access Begin
+app.MapControllers();
+//Add WebAPI Contoller Access End
+
 
 app.MapFallbackToPage("/_Host");
 
