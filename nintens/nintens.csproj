@@ -26,6 +26,8 @@
 
   <ItemGroup>
     <ProjectReference Include="..\eventlib\eventlib.csproj" />
+    <ProjectReference Include="..\formbuilder.mudblazor\formbuilder.mudblazor.csproj" />
+    <ProjectReference Include="..\formbuilder\formbuilder.csproj" />
     <ProjectReference Include="..\Modal\modal.csproj" />
     <ProjectReference Include="..\repository\repository.csproj" />
     <ProjectReference Include="..\service\service.csproj" />

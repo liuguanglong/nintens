@@ -1,0 +1,30 @@
+﻿@page "/testformbuilder"
+@using formbuilder.mudblazor
+@using Newtonsoft.Json.Linq
+
+<GridLayout LayoutDefinition="formdefine"></GridLayout>
+@code {
+    JObject formdefine = new JObject();
+    protected override async Task OnInitializedAsync()
+    {
+        JObject f1 = new JObject();
+        f1.Add("Name","Field1");
+        JObject f2 = new JObject();
+        f2.Add("Name","Field2");
+        JObject f3 = new JObject();
+        f3.Add("Name","Field3");
+
+        JArray row1 = new JArray();
+        JArray row2 = new JArray();
+
+        row1.Add(f1);
+        row1.Add(f2);
+        row2.Add(f3);
+
+        JArray rows = new JArray();
+        rows.Add(row1);
+        rows.Add(row2);
+
+        formdefine.Add("Rows", rows);
+    }
+}

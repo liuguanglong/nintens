@@ -1,0 +1,17 @@
+﻿@using MudBlazor
+@using Newtonsoft.Json.Linq
+
+<MudGrid>
+    @foreach (var row in Rows)
+    {
+        <MudItem md="12">
+            <div Class="d-flex  align-end justify-start px-2">
+            @foreach (var field in row.Values())
+                    {
+                        <DynamicComponent Type="@Type.GetType("formbuilder.mudblazor.ButtonElement")" Parameters="@Parameters" />
+                    }
+                </div>
+        </MudItem>
+    }
+</MudGrid>
+
