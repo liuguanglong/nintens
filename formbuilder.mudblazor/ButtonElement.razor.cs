@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Components;
+using MudBlazor;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,5 +12,13 @@ namespace formbuilder.mudblazor
     {
         [Parameter]
         public String Label { get; set; }
+
+        protected override void OnParametersSet()
+        {
+            base.OnParametersSet();
+            Label = "test2020";
+        }
+
+        private MudButton button1;
     }
 }
