@@ -22,6 +22,18 @@ namespace formbuilder.mudblazor
             }
         }
 
-        public Dictionary<string, object> Parameters = new() { { "Label", "Button1" } };
+        public Dictionary<string, object> BuildParameters()
+        {
+            Dictionary<string, String> properties = new() { { "Label", "Button1" } };
+            var Parameters = new Dictionary<string, object> { { "Properties", properties } };
+            return Parameters;
+        }
+
+        public override Task SetParametersAsync(ParameterView parameters)
+        {
+            return base.SetParametersAsync(parameters);
+        }
+
+
     }
 }

@@ -8,7 +8,7 @@
             <div Class="d-flex  align-end justify-start px-2">
             @foreach (var field in row.Values())
                     {
-                        <DynamicComponent Type="@Type.GetType("formbuilder.mudblazor.ButtonElement")" Parameters="@Parameters" />
+                        <DynamicComponent Type="@Type.GetType("formbuilder.mudblazor.ButtonElement")" Parameters="@BuildParameters()" />
                     }
                 </div>
         </MudItem>

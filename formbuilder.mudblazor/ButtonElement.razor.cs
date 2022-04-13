@@ -11,12 +11,26 @@ namespace formbuilder.mudblazor
     public partial class ButtonElement
     {
         [Parameter]
-        public String Label { get; set; }
+        public Dictionary<String,String> Properties { get; set; }
 
-        protected override void OnParametersSet()
+        public String Label { get; set; } = "Button";
+
+        public Size Size { get; set; } = Size.Medium;
+
+        public Color Color { get; set; } = Color.Default;
+        public Variant Variant { get; set; } = Variant.Outlined;
+
+        public bool Disabled { get; set; } = false;
+        public String Class { get; set; } = "";
+
+    protected override void OnParametersSet()
         {
             base.OnParametersSet();
-            Label = "test2020";
+
+            foreach(var p in Properties)
+            {
+                
+            }
         }
 
         private MudButton button1;
