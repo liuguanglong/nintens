@@ -21,9 +21,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "uiscriptengine", "uiscripte
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "scriptengine.test", "scriptengine.test\scriptengine.test.csproj", "{A1DB95CB-5115-4761-A1EE-6B6F93E51DD2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "formbuilder", "formbuilder\formbuilder.csproj", "{AC9E9780-5AF7-4B0A-A167-F2F785B50FBC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "formbuilder", "formbuilder\formbuilder.csproj", "{AC9E9780-5AF7-4B0A-A167-F2F785B50FBC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "formbuilder.mudblazor", "formbuilder.mudblazor\formbuilder.mudblazor.csproj", "{F7F0518C-DB3C-4D1B-B9D1-FA60D1C9C918}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "formbuilder.mudblazor", "formbuilder.mudblazor\formbuilder.mudblazor.csproj", "{F7F0518C-DB3C-4D1B-B9D1-FA60D1C9C918}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

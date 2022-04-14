@@ -1,0 +1,23 @@
+﻿@using MudBlazor 
+   
+<MudContainer MaxWidth="MaxWidth.ExtraExtraLarge">
+    <MudText Typo="Typo.h3" Align="Align.Center" GutterBottom="true">Form Designer</MudText>
+    <MudGrid Class="mt-16">
+       <MudItem xs="4">
+            <MudTreeView Items="TreeItems" @bind-ActivatedValue="ActivatedValue">
+                <ItemTemplate>
+                    <MudTreeViewItem @bind-Expanded="@context.IsExpanded" Items="@context.TreeItems" Value="@context"
+                           Text="@context.Title" EndText="@context.ControlType" EndTextTypo="@Typo.caption" />
+                </ItemTemplate>
+            </MudTreeView>
+            <div style="width: 100%">
+            <MudText Typo="@Typo.subtitle1">Activated item: @(ActivatedValue?.Title)</MudText>
+            <MudButton OnClick="@(()=>addtoRoot())">Add Control To Root</MudButton>
+            <MudButton>Add Control To Current Node</MudButton>
+            </div>
+       </MudItem>
+       <MudItem xs="8">
+           <GridLayout LayoutDefinition="formdefine"></GridLayout>
+       </MudItem>
+    </MudGrid>
+</MudContainer>

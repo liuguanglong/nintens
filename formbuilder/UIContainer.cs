@@ -9,20 +9,42 @@ namespace formbuilder
     public class Grid: Container
     {
         public Dictionary<int, MudItem> items;
+
+        public override List<Type> getControlTypes()
+        {
+            List<Type> list = new List<Type> { typeof(MudItem) };
+            return list;
+        }
+
     }
 
     public class MudItem: Container
     {
         public Dictionary<int, Element> items;
+        public override List<Type> getControlTypes()
+        {
+            List<Type> list = new List<Type> { typeof(Grid) };
+            return list;
+        }
     }
 
     public class Div: Container
     {
         public Dictionary<int, ControlElement> items;
+        public override List<Type> getControlTypes()
+        {
+            List<Type> list = new List<Type> { };
+            return list;
+        }
     }
 
     public class Paper: Container
     {
+        public override List<Type> getControlTypes()
+        {
+            List<Type> list = new List<Type> {  };
+            return list;
+        }
 
     }
 
@@ -33,7 +55,14 @@ namespace formbuilder
         public Dictionary<int, ControlElement> Actions;
         public String MediaFile { get; set; }
         public String MediaSize { get; set; }
+        public override List<Type> getControlTypes()
+        {
+            List<Type> list = new List<Type> {};
+            return list;
+        }
     }
+
+
 
     public class Element
     {
@@ -53,11 +82,19 @@ namespace formbuilder
         public String Class { get; set; }
         public String Style { get; set; }
         public String Space { get; set; }
+
+        public abstract List<Type> getControlTypes();
     }
 
-    public class UIContainer
+    public class UIContainer :Container
     {
         public String MaxWidth { get; set; }
         public Dictionary<int, Element> fields;        
+
+        public override List<Type> getControlTypes()
+        {
+            List<Type> list = new List<Type> {typeof(Grid) };
+            return list;
+        }
     }
 }
