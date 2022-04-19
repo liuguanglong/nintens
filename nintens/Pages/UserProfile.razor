@@ -1,0 +1,30 @@
+﻿@page "/userprofile"
+
+@if (curUser == null)
+{
+    <MudProgressCircular Color="Color.Primary" Indeterminate="true" />
+}
+else
+{
+<MudGrid>
+    <MudItem xs="12" sm="6">
+        <MudPaper Class="pa-4">
+            <MudForm>
+                <!-- Only allow edit if a new user -->
+                <MudTextField T="string" Label="User Name" @bind-Value="@curUser.UserName" Required="true" ReadOnly="true" RequiredError="User Name is required!" />
+                <MudSelect T="string" @bind-Value="@curUser.TimeZoneId" Label="TimeZone" AnchorOrigin="Origin.BottomCenter" Variant="Variant.Outlined" Clearable>
+                 @foreach (var timezone in TimeZoneInfo.GetSystemTimeZones())
+                    {
+                        <MudSelectItem T="string" Value="@timezone.Id">@timezone.DisplayName</MudSelectItem>
+                    }
+                </MudSelect>
+
+                <MudSpacer/>
+                 <div class="d-flex flex-row-reverse">
+                   <MudButton Variant="Variant.Filled" Color="Color.Primary" Size="Size.Small" @onclick="(() => Save())">Save</MudButton>
+                 </div>
+            </MudForm>
+        </MudPaper>
+    </MudItem>
+</MudGrid>
+}

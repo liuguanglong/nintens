@@ -37,6 +37,9 @@ namespace nintens
                  connString,
                 ServerVersion.AutoDetect(connString)));
 
+            services.AddDbContextFactory<ApplicationDbContext>(options => options.UseMySql(
+                 connString,
+                ServerVersion.AutoDetect(connString)));
 
             services.AddTransient<IEmailSender, EmailSender>(i =>
                 new EmailSender(
@@ -68,6 +71,7 @@ namespace nintens
             //Add Identity Service End
 
             services.AddTransient<WeatherForecastService>();
+            services.AddTransient<ApplicationIdentityService>();
 
             services.AddMudServices(config =>
             {
