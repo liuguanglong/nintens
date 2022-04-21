@@ -50,6 +50,19 @@ app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "NintensRest
 
 app.UseStaticFiles();
 
+//Suport I18N begin
+var supportedCultures = new[] { "en-US", "zh-CN" };
+var localizationOptions = new RequestLocalizationOptions().SetDefaultCulture(supportedCultures[0])
+    .AddSupportedCultures(supportedCultures)
+    .AddSupportedUICultures(supportedCultures);
+localizationOptions.ApplyCurrentCultureToResponseHeaders = true;
+var questStringCultureProvider = localizationOptions.RequestCultureProviders[0];
+localizationOptions.RequestCultureProviders.RemoveAt(0);
+localizationOptions.RequestCultureProviders.Insert(1, questStringCultureProvider);
+
+app.UseRequestLocalization(localizationOptions);
+//Suport I18N end
+
 app.UseRouting();
 
 //Add Authorization Begin

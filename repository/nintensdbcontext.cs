@@ -38,7 +38,7 @@ namespace repository
             modelBuilder.Entity<WeatherForecast>().Property(u => u.TemperatureC).HasColumnType("int").IsRequired();
             modelBuilder.Entity<WeatherForecast>().Property(u => u.Date).HasColumnType("timestamp").IsRequired();
             modelBuilder.Entity<WeatherForecast>().Property(u => u.Summary).HasColumnType("nvarchar(45)").IsRequired(false);
-
+            
 
             modelBuilder.Entity<OperationLog>().Property(u => u.Id).HasColumnType("int").ValueGeneratedOnAdd().IsRequired();
             modelBuilder.Entity<OperationLog>().Property(u => u.EventInfo).HasColumnName("EventId").HasColumnType("nvarchar(45)").IsRequired(false);

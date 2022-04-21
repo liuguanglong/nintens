@@ -1,4 +1,6 @@
 ﻿@page "/userprofile"
+@using System.Globalization
+@inject IStringLocalizer<UserProfile> Loc
 
 @if (curUser == null)
 {
@@ -11,11 +13,18 @@ else
         <MudPaper Class="pa-4">
             <MudForm>
                 <!-- Only allow edit if a new user -->
-                <MudTextField T="string" Label="User Name" @bind-Value="@curUser.UserName" Required="true" ReadOnly="true" RequiredError="User Name is required!" />
-                <MudSelect T="string" @bind-Value="@curUser.TimeZoneId" Label="TimeZone" AnchorOrigin="Origin.BottomCenter" Variant="Variant.Outlined" Clearable>
+                <MudTextField T="string" Label="@Loc["UserName"]" @bind-Value="@curUser.UserName" Required="true" ReadOnly="true" RequiredError="User Name is required!" />
+                <MudSelect T="string" @bind-Value="@curUser.TimeZoneId" Label="@Loc["TimeZone"]"  AnchorOrigin="Origin.BottomCenter" Variant="Variant.Outlined" Clearable>
                  @foreach (var timezone in TimeZoneInfo.GetSystemTimeZones())
                     {
                         <MudSelectItem T="string" Value="@timezone.Id">@timezone.DisplayName</MudSelectItem>
+                    }
+                </MudSelect>
+
+                <MudSelect T="CultureInfo"  @bind-Value="@Culture" Label="@Loc["Culture"]"  AnchorOrigin="Origin.BottomCenter" Variant="Variant.Outlined" Clearable>
+                 @foreach (var culture in supportedCultures)
+                    {
+                        <MudSelectItem T="CultureInfo" Value="@culture">@culture.DisplayName</MudSelectItem>
                     }
                 </MudSelect>
 

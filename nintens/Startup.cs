@@ -73,6 +73,13 @@ namespace nintens
             services.AddTransient<WeatherForecastService>();
             services.AddTransient<ApplicationIdentityService>();
 
+            //Add I18N & TimeZoneService Begin 
+            services.AddLocalization();
+            services.AddHttpContextAccessor();
+            //Add I18N & TimeZoneService End
+
+
+
             services.AddMudServices(config =>
             {
                 config.SnackbarConfiguration.PositionClass = Defaults.Classes.Position.TopRight;

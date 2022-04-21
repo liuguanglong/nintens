@@ -23,7 +23,7 @@ namespace service
             return await context.Users.Where(u => u.UserName == name).FirstOrDefaultAsync();
         }
 
-        public async Task updateUserTimeZone(ApplicationUser user)
+        public async Task updateTimeZone(ApplicationUser user)
         {
             using var context = contextFactory.CreateDbContext();
             var userinfo = await context.Users.Where(u => u.UserName == user.UserName).FirstOrDefaultAsync();
