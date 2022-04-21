@@ -3,29 +3,18 @@
 @using Microsoft.AspNetCore.Identity
 @using repository
 
-@inject NavigationManager Nav
-@inject SignInManager<ApplicationUser> SignInManager
 <AuthorizeView>
     <Authorized>
         <MudText Align="Align.Right" Style="@($"color:{Colors.Yellow.Accent2};")">Hello,@context.User.Identity.Name!</MudText>
-        <MudIconButton Icon="@Icons.Filled.Logout" aria-label="LogOut" Href="Identity/Account/LogOut"></MudIconButton>
+        <MudIconButton Style="@($"color:{Colors.Yellow.Accent2};")" Icon="@Icons.Filled.Logout" aria-label="LogOut" Href="Identity/Account/LogOut"></MudIconButton>
      
     </Authorized>
     <NotAuthorized>
-        <MudLink Href="Identity/Account/Register" Typo="Typo.body2" Color="Color.Warning">Register</MudLink>
-        <MudLink Href="Identity/Account/Login" Typo="Typo.body2" Color="Color.Warning">Log in</MudLink>
+        <MudLink Href="Identity/Account/Register" Style="@($"color:{Colors.Yellow.Accent2};")" Typo="Typo.body2" Color="Color.Warning">Register</MudLink>
+        <MudLink Href="Identity/Account/Login" Style="@($"color:{Colors.Yellow.Accent2};")" Typo="Typo.body2" Color="Color.Warning">Log in</MudLink>
     </NotAuthorized>
 </AuthorizeView>
 
 @code
 {
-    protected override void OnInitialized()
-    {
-    }
-
-    public async Task OnPost()
-    {
-        await SignInManager.SignOutAsync();
-        NavigationManager.ToBaseRelativePath("Identity/Account/Login/");
-    }
 }
